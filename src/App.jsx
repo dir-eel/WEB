@@ -1,11 +1,19 @@
 import {
-  CheckCircle2,
+  Activity,
+  BusFront,
   ChevronRight,
+  CircleGauge,
   Clock3,
-  Gauge,
+  Cog,
+  Cpu,
+  Mail,
+  MapPin,
   Menu,
+  PackageSearch,
   Phone,
+  Settings2,
   ShieldCheck,
+  Snowflake,
   Truck,
   Wrench,
   X,
@@ -13,36 +21,59 @@ import {
 import { useState } from "react";
 import {
   BASE,
+  CONTACT_EMAIL,
+  PHONE_DISPLAY,
+  PHONE_LINK,
   clients,
-  servicesPrimary,
-  servicesSecondary,
+  services,
+  unitTypes,
   whatsappUrl,
 } from "./data.js";
 
+const serviceIcons = {
+  diagnostic: Activity,
+  maintenance: CircleGauge,
+  mechanical: Wrench,
+  field: Truck,
+  supplies: PackageSearch,
+  scr: Cpu,
+  parameters: Settings2,
+};
+
+const unitIcons = {
+  cold: Snowflake,
+  bus: BusFront,
+  heavy: Truck,
+};
+
 function Header() {
   const [open, setOpen] = useState(false);
-
   const closeMenu = () => setOpen(false);
 
   return (
     <header className="site-header">
-    <a className="brand" href="#inicio"><img src={`${BASE}logo/direel-logo.png`} alt="DIREEL" /></a>
+      <a className="brand" href="#inicio" aria-label="Ir al inicio de DIREEL">
+        <img src={`${BASE}logo/direel-logo.png`} alt="DIREEL" />
+      </a>
+
       <button
         className="menu-toggle"
-        aria-label="Abrir menú"
-        onClick={() => setOpen(!open)}
+        type="button"
+        aria-label={open ? "Cerrar menú" : "Abrir menú"}
+        aria-expanded={open}
+        onClick={() => setOpen((current) => !current)}
       >
-        {open ? <X size={24} /> : <Menu size={24} />}
+        {open ? <X size={25} /> : <Menu size={25} />}
       </button>
 
-      <nav className={`nav ${open ? "nav-open" : ""}`}>
+      <nav className={`nav ${open ? "nav-open" : ""}`} aria-label="Navegación principal">
+        <a href="#inicio" onClick={closeMenu}>Inicio</a>
         <a href="#servicios" onClick={closeMenu}>Servicios</a>
-        <a href="#especialidad" onClick={closeMenu}>Especialidad</a>
-        <a href="#flotillas" onClick={closeMenu}>Flotillas</a>
+        <a href="#unidades" onClick={closeMenu}>Unidades</a>
         <a href="#clientes" onClick={closeMenu}>Clientes</a>
         <a href="#contacto" onClick={closeMenu}>Contacto</a>
         <a className="nav-cta" href={whatsappUrl} target="_blank" rel="noreferrer">
-          Solicitar atención
+          Solicitar diagnóstico
         </a>
       </nav>
     </header>
@@ -51,80 +82,65 @@ function Header() {
 
 function Hero() {
   return (
-    <section id="inicio" className="hero hero-full">
-      <div className="container">
-        <div className="hero-card">
-          <img
-            src={`${BASE}images/hero.png`}
-            alt="Servicio técnico diésel para unidades pesadas"
-            className="hero-card-img"
-          />
+    <section id="inicio" className="hero">
+      <img
+        src={`${BASE}images/hero.png`}
+        alt="Servicio técnico DIREEL para unidades diésel pesadas"
+        className="hero-image"
+      />
+      <div className="hero-overlay" />
 
-          <div className="hero-card-content">
-            <p className="eyebrow">Multimarcas con especialidad en plataformas europeas</p>
-            <h1>Mantenimiento y reparación para unidades pesadas diésel</h1>
-            <p className="hero-text">
-              Diagnóstico preciso, reparación eficiente y atención técnica especializada
-              para mantener las unidades trabajando.
+      <div className="container hero-content">
+        <div className="hero-copy">
+          <span className="hero-rule" aria-hidden="true" />
+          <p className="eyebrow">Servicio técnico especializado</p>
+          <h1>
+            Diagnóstico y reparación especializada en sistemas <em>diésel</em>
+          </h1>
+          <p className="hero-text">
+            Soluciones técnicas para mantener tus unidades en operación, reducir tiempos
+            fuera de servicio y recuperar su funcionamiento.
+          </p>
+
+          <div className="hero-specialties" aria-label="Servicios destacados">
+            <span>Cancelación del sistema SCR / urea</span>
+            <span>Modificación de parámetros</span>
+          </div>
+
+          <div className="hero-audience">
+            <Truck size={30} aria-hidden="true" />
+            <p>
+              Atendemos <strong>unidades de frío, autobuses y unidades de carga pesada diésel.</strong>
             </p>
+          </div>
 
-            <div className="hero-tags">
-              <span>Multimarcas</span>
-              <span>Especialidad europea</span>
-              <span>Atención a flotillas</span>
-              <span>Continuidad operativa</span>
-            </div>
-
-            <div className="hero-actions">
-              <a className="btn btn-primary" href={whatsappUrl} target="_blank" rel="noreferrer">
-                Solicitar atención por WhatsApp
-                <ChevronRight size={18} />
-              </a>
-              <a className="btn btn-secondary" href="#servicios">
-                Ver servicios
-              </a>
-            </div>
+          <div className="hero-actions">
+            <a className="btn btn-primary" href={whatsappUrl} target="_blank" rel="noreferrer">
+              Solicitar servicio <ChevronRight size={19} />
+            </a>
+            <a className="btn btn-outline" href="#servicios">
+              Ver servicios
+            </a>
           </div>
         </div>
       </div>
-    </section>
-  );
-}
 
-function Indicators() {
-  const items = [
-    {
-      icon: <Gauge />,
-      title: "Diagnóstico preciso",
-      text: "Identificación técnica de la causa real de la falla.",
-    },
-    {
-      icon: <Wrench />,
-      title: "Reparación eficiente",
-      text: "Intervenciones orientadas a recuperar operación.",
-    },
-    {
-      icon: <Truck />,
-      title: "Atención multimarcas",
-      text: "Unidades pesadas diésel y plataformas europeas.",
-    },
-    {
-      icon: <Clock3 />,
-      title: "Continuidad operativa",
-      text: "Menor tiempo fuera de servicio.",
-    },
-  ];
-
-  return (
-    <section className="indicators">
-      <div className="container indicators-grid">
-        {items.map((item) => (
-          <article className="indicator-card" key={item.title}>
-            <div className="icon-box">{item.icon}</div>
-            <h3>{item.title}</h3>
-            <p>{item.text}</p>
-          </article>
-        ))}
+      <div className="rescue-wrap">
+        <div className="container">
+          <div className="rescue-bar">
+            <div className="rescue-title">
+              <Truck size={34} aria-hidden="true" />
+              <strong>Atención y rescate auxiliar</strong>
+            </div>
+            <div className="rescue-text">
+              <Clock3 size={26} aria-hidden="true" />
+              <span>Asistencia en sitio y apoyo técnico cuando la unidad lo necesite.</span>
+            </div>
+            <a href={whatsappUrl} target="_blank" rel="noreferrer" aria-label="Solicitar atención y rescate auxiliar">
+              Solicitar atención <ChevronRight size={18} />
+            </a>
+          </div>
+        </div>
       </div>
     </section>
   );
@@ -132,124 +148,108 @@ function Indicators() {
 
 function Services() {
   return (
-    <section id="servicios" className="section services">
+    <section id="servicios" className="section services-section">
       <div className="container">
-        <div className="section-heading">
-          <p className="eyebrow">Servicios DIREEL</p>
-          <h2>Soporte técnico para operación diésel pesada</h2>
+        <div className="section-heading section-heading-dark">
+          <span className="heading-line" aria-hidden="true" />
+          <p className="eyebrow">Nuestros servicios</p>
+          <h2>Atención integral para sistemas diésel</h2>
           <p>
-            Servicios enfocados en mantenimiento, reparación y continuidad operativa
-            para unidades pesadas diésel multimarcas.
+            Servicios especializados para tractocamiones, autobuses y unidades diésel de trabajo pesado.
           </p>
         </div>
 
         <div className="service-grid">
-          {servicesPrimary.map((service) => (
-            <article className="service-card" key={service.title}>
-              <Wrench size={28} />
-              <h3>{service.title}</h3>
-              <p>{service.text}</p>
-            </article>
-          ))}
-        </div>
-
-        <div className="secondary-services">
-          {servicesSecondary.map((service) => (
-            <span key={service}>{service}</span>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function Specialty() {
-  return (
-    <section id="especialidad" className="section specialty section-dark">
-      <div className="container specialty-grid">
-        <div className="specialty-media">
-          <img src={`${BASE}images/especialidad.png`} alt="Especialidad en plataformas europeas" />
-        </div>
-
-        <div className="specialty-content">
-          <p className="eyebrow">Diferencial técnico</p>
-          <h2>Especialidad en plataformas europeas</h2>
-          <p>
-            DIREEL trabaja con plataformas y configuraciones europeas para unidades
-            pesadas diésel multimarcas.
-          </p>
-          <p>
-            Aplicamos diagnóstico técnico orientado a identificar la causa real de
-            la falla y ejecutar reparaciones eficientes para mantener la operación
-            de la unidad.
-          </p>
-
-          <div className="specialty-list">
-            <span><CheckCircle2 /> Diagnóstico técnico aplicado</span>
-            <span><CheckCircle2 /> Sistemas europeos</span>
-            <span><CheckCircle2 /> Configuraciones multimarcas</span>
-            <span><CheckCircle2 /> Reparación orientada a operación</span>
-          </div>
+          {services.map((service) => {
+            const Icon = serviceIcons[service.icon] ?? Wrench;
+            return (
+              <article className="service-card" key={service.number}>
+                <div className="service-card-top">
+                  <span>{service.number}</span>
+                  <Icon size={34} aria-hidden="true" />
+                </div>
+                <div className="service-card-body">
+                  <h3>{service.title}</h3>
+                  <p>{service.text}</p>
+                  <span className="service-accent" aria-hidden="true" />
+                </div>
+              </article>
+            );
+          })}
         </div>
       </div>
     </section>
   );
 }
 
-function Approach() {
-  return (
-    <section className="section approach">
-      <div className="container narrow">
-        <p className="eyebrow">Enfoque DIREEL</p>
-        <h2>Diagnóstico fundamentado. Reparación eficiente.</h2>
-        <p>
-          Nuestro enfoque es identificar la causa real de la falla para ejecutar
-          intervenciones técnicas orientadas a mantener las unidades trabajando.
-        </p>
-
-        <div className="pillar-grid">
-          <article>
-            <ShieldCheck />
-            <h3>Precisión técnica</h3>
-          </article>
-          <article>
-            <Clock3 />
-            <h3>Continuidad operativa</h3>
-          </article>
-          <article>
-            <Wrench />
-            <h3>Atención especializada</h3>
-          </article>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function Process() {
-  const steps = [
-    ["01", "Revisión inicial", "Evaluación técnica de la unidad."],
-    ["02", "Diagnóstico técnico", "Identificación de causa real."],
-    ["03", "Intervención técnica", "Mantenimiento y reparación."],
-    ["04", "Validación operativa", "Pruebas y comprobación técnica."],
+function TechnicalBacking() {
+  const items = [
+    {
+      icon: ShieldCheck,
+      title: "Respaldo técnico actual",
+      text: "Nuestro trabajo en campo y la capacidad técnica de nuestros especialistas respaldan cada servicio.",
+    },
+    {
+      icon: Activity,
+      title: "Diagnóstico preciso",
+      text: "Evaluación técnica para identificar la causa real de la falla.",
+    },
+    {
+      icon: Wrench,
+      title: "Reparación eficiente",
+      text: "Intervenciones enfocadas en recuperar el funcionamiento de la unidad.",
+    },
+    {
+      icon: Cog,
+      title: "Continuidad operativa",
+      text: "Trabajo orientado a reducir tiempos fuera de servicio.",
+    },
   ];
 
   return (
-    <section className="section process section-dark-soft">
-      <div className="container">
+    <section className="technical-backing" aria-label="Respaldo técnico DIREEL">
+      <div className="container technical-grid">
+        {items.map((item) => {
+          const Icon = item.icon;
+          return (
+            <article key={item.title}>
+              <Icon size={34} aria-hidden="true" />
+              <div>
+                <h3>{item.title}</h3>
+                <p>{item.text}</p>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
+function Units() {
+  return (
+    <section id="unidades" className="section units-section">
+      <div className="container units-layout">
         <div className="section-heading">
-          <p className="eyebrow">Proceso operativo</p>
-          <h2>Orden técnico desde la revisión hasta la validación</h2>
+          <span className="heading-line" aria-hidden="true" />
+          <p className="eyebrow">Unidades que atendemos</p>
+          <h2>Servicio para operaciones de transporte y trabajo pesado</h2>
+          <p>
+            Atención técnica especializada para diferentes configuraciones diésel, empresas con flotillas y operadores independientes.
+          </p>
         </div>
 
-        <div className="process-grid">
-          {steps.map(([number, title, text]) => (
-            <article className="process-card" key={number}>
-              <span>{number}</span>
-              <h3>{title}</h3>
-              <p>{text}</p>
-            </article>
-          ))}
+        <div className="units-grid">
+          {unitTypes.map((unit) => {
+            const Icon = unitIcons[unit.icon] ?? Truck;
+            return (
+              <article className="unit-card" key={unit.title}>
+                <div className="unit-icon"><Icon size={38} aria-hidden="true" /></div>
+                <h3>{unit.title}</h3>
+                <p>{unit.text}</p>
+              </article>
+            );
+          })}
         </div>
       </div>
     </section>
@@ -258,14 +258,13 @@ function Process() {
 
 function Clients() {
   return (
-    <section id="clientes" className="section clients">
+    <section id="clientes" className="section clients-section">
       <div className="container">
-        <div className="section-heading">
-          <p className="eyebrow">Clientes y respaldo</p>
-          <h2>Empresas que han confiado en DIREEL</h2>
-          <p>
-            Logos publicados únicamente bajo autorización. Cada marca enlaza a su página oficial.
-          </p>
+        <div className="section-heading section-heading-dark compact-heading">
+          <span className="heading-line" aria-hidden="true" />
+          <p className="eyebrow">Algunos de nuestros clientes</p>
+          <h2>Trabajo que respalda a DIREEL</h2>
+          <p>Empresas y operaciones que han confiado unidades a nuestro equipo técnico.</p>
         </div>
 
         <div className="clients-grid">
@@ -278,7 +277,7 @@ function Clients() {
               key={client.name}
               aria-label={`Visitar sitio de ${client.name}`}
             >
-              <img src={client.logo} alt={client.name} />
+              <img src={client.logo} alt={client.name} loading="lazy" />
             </a>
           ))}
         </div>
@@ -287,49 +286,25 @@ function Clients() {
   );
 }
 
-function Fleets() {
+function ContactBand() {
   return (
-    <section id="flotillas" className="section fleets section-dark">
-      <div className="container fleets-grid">
-        <div>
-          <p className="eyebrow">Flotillas y empresas</p>
-          <h2>Atención técnica para flotillas y empresas</h2>
-          <p>
-            Soporte técnico orientado a mantenimiento preventivo, reparación y
-            continuidad operativa para unidades pesadas diésel.
-          </p>
+    <section className="contact-band" aria-label="Contacto inmediato">
+      <div className="container contact-band-grid">
+        <div className="contact-band-title">
+          <Phone size={32} aria-hidden="true" />
+          <div>
+            <h2>¿Necesitas atención técnica?</h2>
+            <p>Contáctanos para revisar tu unidad y definir el servicio requerido.</p>
+          </div>
         </div>
 
-        <div className="fleet-checklist">
-          {[
-            "Atención directa",
-            "Contratos de mantenimiento",
-            "Atención multimarcas",
-            "Continuidad operativa",
-            "Soporte técnico especializado",
-          ].map((item) => (
-            <span key={item}>
-              <CheckCircle2 />
-              {item}
-            </span>
-          ))}
+        <div className="contact-band-links">
+          <a href={`tel:${PHONE_LINK}`}><Phone size={20} /> {PHONE_DISPLAY}</a>
+          <a href={`mailto:${CONTACT_EMAIL}`}><Mail size={20} /> {CONTACT_EMAIL}</a>
         </div>
-      </div>
-    </section>
-  );
-}
 
-function FinalCta() {
-  return (
-    <section className="final-cta">
-      <div className="container final-cta-box">
-        <h2>Mantén tus unidades trabajando</h2>
-        <p>
-          Solicita información para revisión, mantenimiento o reparación de unidades
-          pesadas diésel.
-        </p>
-        <a className="btn btn-light" href={whatsappUrl} target="_blank" rel="noreferrer">
-          Solicitar atención por WhatsApp
+        <a className="btn btn-primary contact-button" href={whatsappUrl} target="_blank" rel="noreferrer">
+          Contactar ahora <ChevronRight size={19} />
         </a>
       </div>
     </section>
@@ -340,31 +315,34 @@ function Footer() {
   return (
     <footer id="contacto" className="footer">
       <div className="container footer-grid">
-        <div>
-         <img
-          src={`${BASE}logo/direel-logo.png`} alt="DIREEL" className="footer-logo" />
-          <p>Servicio técnico diésel para unidades pesadas multimarcas.</p>
+        <div className="footer-brand">
+          <img src={`${BASE}logo/direel-logo.png`} alt="DIREEL" />
+          <p>Diagnóstico, mantenimiento y reparación de sistemas diésel.</p>
         </div>
 
         <div>
           <h3>Contacto</h3>
-          <p><Phone size={16} /> +52 229 424 6574</p>
-          <p>direel.informes@gmail.com</p>
-          <p>Medellín, Veracruz, México</p>
+          <a href={`tel:${PHONE_LINK}`}><Phone size={17} /> {PHONE_DISPLAY}</a>
+          <a href={`mailto:${CONTACT_EMAIL}`}><Mail size={17} /> {CONTACT_EMAIL}</a>
+          <span><MapPin size={17} /> Medellín, Veracruz, México</span>
         </div>
 
         <div>
-          <h3>Horario</h3>
-          <p>Lunes a sábado</p>
-          <p>8:00 a 21:00 hrs.</p>
+          <h3>Compromiso técnico</h3>
+          <span><Activity size={17} /> Diagnóstico preciso</span>
+          <span><Wrench size={17} /> Reparación eficiente</span>
+          <span><Cog size={17} /> Continuidad operativa</span>
         </div>
       </div>
 
       <div className="footer-bottom">
-        <p>DIREEL © Todos los derechos reservados.</p>
+        <div className="container">
+          <span>direel.com.mx</span>
+          <span>DIREEL © Todos los derechos reservados.</span>
+        </div>
       </div>
 
-      <a className="whatsapp-float" href={whatsappUrl} target="_blank" rel="noreferrer" aria-label="WhatsApp DIREEL">
+      <a className="whatsapp-float" href={whatsappUrl} target="_blank" rel="noreferrer" aria-label="Contactar a DIREEL por WhatsApp">
         WhatsApp
       </a>
     </footer>
@@ -377,18 +355,13 @@ export default function App() {
       <Header />
       <main>
         <Hero />
-        <Indicators />
         <Services />
-        <Specialty />
-        <Approach />
-        <Process />
+        <TechnicalBacking />
+        <Units />
         <Clients />
-        <Fleets />
-        <FinalCta />
+        <ContactBand />
       </main>
       <Footer />
     </>
   );
 }
-
-
