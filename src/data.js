@@ -1,45 +1,78 @@
 export const BASE = import.meta.env.BASE_URL;
 
+export const CONTACT_EMAIL = "direel.info@gmail.com";
+export const PHONE_DISPLAY = "+52 229 424 6574";
+export const PHONE_LINK = "+522294246574";
 export const WHATSAPP_NUMBER = "522294246574";
 
 export const WHATSAPP_MESSAGE =
-  "Hola, estoy interesado en información sobre servicios para una unidad diésel pesada. Quiero solicitar informes para revisión, mantenimiento o reparación.";
+  "Hola, necesito información sobre un servicio para una unidad diésel. Me interesa diagnóstico, mantenimiento, reparación o atención en campo.";
 
 export const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
   WHATSAPP_MESSAGE
 )}`;
 
-export const servicesPrimary = [
+export const services = [
   {
-    title: "Mantenimiento preventivo",
-    text: "Programas orientados a mantener unidades operando con mayor confiabilidad.",
+    number: "01",
+    icon: "diagnostic",
+    title: "Diagnóstico y electrónica",
+    text: "Diagnóstico electrónico, localización de averías, programación y reparación de sistemas diésel.",
   },
   {
-    title: "Reparación mayor",
-    text: "Intervenciones técnicas para recuperación operativa en unidades pesadas diésel.",
+    number: "02",
+    icon: "maintenance",
+    title: "Mantenimiento",
+    text: "Mantenimiento preventivo y correctivo, lubricación, filtros, inspección y pruebas de funcionamiento.",
   },
   {
-    title: "Diagnóstico técnico",
-    text: "Evaluación fundamentada para identificar la causa real de la falla.",
+    number: "03",
+    icon: "mechanical",
+    title: "Reparaciones mecánicas",
+    text: "Atención de motores, transmisiones, embragues, diferenciales, suspensión, dirección y enfriamiento.",
   },
   {
-    title: "Atención a flotillas",
-    text: "Soporte técnico para empresas, contratos de mantenimiento y operación continua.",
+    number: "04",
+    icon: "field",
+    title: "Servicios en campo",
+    text: "Asistencia, diagnóstico en sitio, atención en instalaciones del cliente y preparación para remolque.",
   },
   {
-    title: "Cancelación de sistema SCR/AdBlue",
-    text: "Modificación de parámetros del sistema de postratamiento para unidades pesadas diésel.",
+    number: "05",
+    icon: "supplies",
+    title: "Refacciones y suministros",
+    text: "Componentes mecánicos y eléctricos, filtros, consumibles, tornillería y suministros para servicio.",
+  },
+  {
+    number: "06",
+    icon: "scr",
+    title: "Cancelación SCR / urea",
+    text: "Cancelación del sistema SCR / AdBlue para unidades diésel, de acuerdo con la evaluación técnica.",
+  },
+  {
+    number: "07",
+    icon: "parameters",
+    title: "Modificación de parámetros",
+    text: "Ajuste y modificación de parámetros electrónicos conforme a la unidad y al servicio solicitado.",
   },
 ];
 
-export const servicesSecondary = [
-  "Motores diésel",
-  "Transmisiones",
-  "Embragues",
-  "Diferenciales",
-  "Sistemas eléctricos asociados",
-  "Unidades pesadas multimarcas",
-  "Cancelación de sistema SCR/AdBlue y modificación de parámetros",
+export const unitTypes = [
+  {
+    icon: "cold",
+    title: "Unidades de frío",
+    text: "Atención técnica para transporte refrigerado y unidades diésel de operación especializada.",
+  },
+  {
+    icon: "bus",
+    title: "Autobuses",
+    text: "Diagnóstico, mantenimiento y reparación de autobuses y unidades de transporte de pasajeros.",
+  },
+  {
+    icon: "heavy",
+    title: "Carga pesada diésel",
+    text: "Servicio para tractocamiones, camiones de carga y unidades de trabajo pesado.",
+  },
 ];
 
 export const clients = [
