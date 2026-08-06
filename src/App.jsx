@@ -271,7 +271,7 @@ function Clients() {
         <div className="clients-grid">
           {clients.map((client) => (
             <a
-              className="client-logo"
+              className={`client-logo ${client.className ?? ""}`}
               href={client.url}
               target="_blank"
               rel="noreferrer"
@@ -328,7 +328,7 @@ function FinalCta() {
           Solicita información para revisión, mantenimiento o reparación de unidades
           pesadas diésel.
         </p>
-        <a className="btn btn-light" href={whatsappUrl} target="\\\\\\\\\\\\\\\_blank" rel="noreferrer">
+        <a className="btn btn-light" href={whatsappUrl} target="_blank" rel="noreferrer">
           Solicitar atención por WhatsApp
         </a>
       </div>
@@ -364,7 +364,7 @@ function Footer() {
         <p>DIREEL © Todos los derechos reservados.</p>
       </div>
 
-      <a className="whatsapp-float" href={whatsappUrl} target="\\\\\\\\\\\\\\\_blank" rel="noreferrer" aria-label="WhatsApp DIREEL">
+      <a className="whatsapp-float" href={whatsappUrl} target="_blank" rel="noreferrer" aria-label="WhatsApp DIREEL">
         WhatsApp
       </a>
     </footer>

@@ -326,7 +326,7 @@ h2 {
 
 .service-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 18px;
 }
 
@@ -452,15 +452,17 @@ h2 {
 
 .clients-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 18px;
 }
 
 .client-logo {
+  position: relative;
   height: 132px;
   display: grid;
   place-items: center;
   padding: 24px;
+  overflow: hidden;
   background: white;
   border-radius: 20px;
   border: 1px solid rgba(43,45,66,.12);
@@ -483,6 +485,21 @@ h2 {
 .client-logo:hover img {
   filter: grayscale(0);
   opacity: 1;
+}
+
+.client-logo--express {
+  padding: 0;
+}
+
+.client-logo--express img {
+  width: 120%;
+  max-width: none;
+  max-height: none;
+  flex: 0 0 auto;
+}
+
+.client-logo--onma {
+  background: #050505;
 }
 
 /* FLOTILLAS */

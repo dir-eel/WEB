@@ -26,6 +26,10 @@ export const servicesPrimary = [
     title: "Atención a flotillas",
     text: "Soporte técnico para empresas, contratos de mantenimiento y operación continua.",
   },
+  {
+    title: "Cancelación de sistema SCR/AdBlue",
+    text: "Modificación de parámetros del sistema de postratamiento para unidades pesadas diésel.",
+  },
 ];
 
 export const servicesSecondary = [
@@ -35,13 +39,14 @@ export const servicesSecondary = [
   "Diferenciales",
   "Sistemas eléctricos asociados",
   "Unidades pesadas multimarcas",
+  "Cancelación de sistema SCR/AdBlue y modificación de parámetros",
 ];
 
 export const clients = [
   {
     name: "UNNE",
     logo: `${BASE}clientes/unne.png`,
-    url: "unne.com.mx/pagina-principal/",
+    url: "https://unne.com.mx/pagina-principal/",
   },
   {
     name: "MOZ Cargo",
@@ -62,5 +67,22 @@ export const clients = [
     name: "Lozagui",
     logo: `${BASE}clientes/lozagui.png`,
     url: "https://lozagui.com/",
+  },
+  {
+    name: "Express Tour",
+    logo: `${BASE}clientes/express-tour.png`,
+    url: "https://www.expresstour.com.mx/",
+    className: "client-logo--express",
+  },
+  {
+    name: "Idealease",
+    logo: `${BASE}clientes/idealease.png`,
+    url: "https://idealease.mx/",
+  },
+  {
+    name: "ONMA Mi Logística",
+    logo: `${BASE}clientes/onma-mi-logistica.png`,
+    url: "https://onma.com.mx/",
+    className: "client-logo--onma",
   },
 ];
